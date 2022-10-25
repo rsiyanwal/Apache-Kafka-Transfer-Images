@@ -31,4 +31,4 @@ For Kafka introduction in much detail please follow the link [Apache Kafka Basic
 <a name="kafka-Usecase"/>
 
 ## When to use Apache Kafka
-Kafka is better suited for text-based messaging. Kafka configuration limits the size of messages that it's allowed to send. By default, this limit is 1MB. However, we must tweak the configuration a little if we need to send large messages. In this project, we will be sending images of size less than 1MB.
+Kafka is better suited for text-based messaging. Kafka configuration limits the size of messages that it's allowed to transmit. By default, this limit is 1MB. Nevertheless, we must adjust the configuration slightly if we need to send large messages. In this project, we will be sending images of sizes less than 1MB.
