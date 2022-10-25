@@ -26,6 +26,9 @@ Kafka uses Key-Value pairs to send or receive a message. The data is transmitted
 ![Kafka-Message-Serialization-1](https://user-images.githubusercontent.com/11557572/196374105-6f8a4c43-1379-4efd-9a0b-da2e8a0a3f64.png)<br/>
 _( Kafka Message (a) Serialization (b) Deserialization on Publisher and Subscriber nodes; by [Rahul Siyanwal](https://github.com/rsiyanwal))_
 
+For Kafka introduction in much detail please follow the link [Apache Kafka Basics](https://github.com/rsiyanwal/Apache-Kafka-Basics/blob/main/README.md).
+
 <a name="kafka-Usecase"/>
 
 ## When to use Apache Kafka
+Kafka is better suited for text-based messaging. Kafka configuration limits the size of messages that it's allowed to send. By default, this limit is 1MB. However, we must tweak the configuration a little if we need to send large messages. In this project, we will be sending images of size less than 1MB.
