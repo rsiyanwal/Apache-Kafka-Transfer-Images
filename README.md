@@ -2,8 +2,6 @@
   - [Brief Introduction to Apache Kafka](#kafka-introduction)
   - [When to use Apache Kafka](#kafka-Usecase)
   - [Kafka For images](#for-images)
-[Requirements and Installations](#installing-requirements)
-[Emphasis](#emphasis)
 
 <a name="kafka-introduction"/>
 
