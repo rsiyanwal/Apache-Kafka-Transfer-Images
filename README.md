@@ -1,5 +1,5 @@
 ### Table of Contents  
-[Brief Introduction to Apache Kafka](#kafka-introduction)
+  - [Brief Introduction to Apache Kafka](#kafka-introduction)
   - [When to use Apache Kafka](#kafka-Usecase)
   - [Kafka For images](#for-images)
 [Requirements and Installations](#installing-requirements)
@@ -35,3 +35,40 @@ For Kafka introduction in much detail please follow the link [Apache Kafka Basic
 
 ## When to use Apache Kafka
 Kafka is well-suited for text-based messaging, and its configuration sets limits on message size. The default size limit is 1MB, so adjustments to the configuration are necessary for sending larger messages. However, for this project, we will be transmitting images that are smaller than 1MB in size.
+
+<a name="for-images"/>
+
+## Kafka for Images
+Two jar files were created to facilitate the transmission and reception of images using Kafka. To utilize these jar files, the following dependencies must be included in the gradle project.
+```
+dependencies {
+  // https://mvnrepository.com/artifact/org.apache.kafka/kafka
+  implementation ’org.apache.kafka:kafka_2.13:3.1.0’
+  
+  // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+  implementation ’org.slf4j:slf4j-api:1.7.36’
+  
+  // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+  implementation ’org.slf4j:slf4j-simple:1.7.36’
+}
+```
+
+With the above dependencies, we can run our Kafka program. However, Apache Kafka is not the ideal platform for sending images since high-quality images typically have sizes in multiple MBs, while Kafka is better suited for data less than 1 MB. Nonetheless, the images we send and receive are less than 1 MB in size. If we use a Raspberry Pi 4B device with a Linux-based OS and a Pi camera attached, we can adjust the image size using the following code.
+```
+libcamera-jpeg -o test.jpg -t 2000 --width 640 --height 480
+```
+
+### Sending the images
+To send data using Kafka, several parameters are required, including the IP address of the server/broker, also known as the Bootstrap Server. If the experiment is on the same machine, we can use 0.0.0.0:9092 (for IPv4) or [::1]:9092 (for IPv6). 9092 is Kafka's default port number. Another essential parameter is the topic name where the data will be sent, key serializer if we are sending the data in key-value pairs, and value serializer for the value. Kafka has several serializers, such as StringSerializer, ShortSerializer, IntegerSerializer, LongSerializer, DoubleSerializer, and ByteArraySerializer. As there is no predefined serializer for an image, we need to first convert the image to a byte array and then use ByteArraySerializer to send the image. 
+
+We utilized the IntelliJ IDE to develop our script and exported it as a jar file. The jar file accepts three parameters: **server address**, **topic**, and **image**. For example,
+```
+java -jar Kafka-Producer-Args.jar 192.168.4.4:9092 ImageTopic image.jpg
+```
+
+### Receiving the images
+To continuously receive data, the Consumer needs to be always active. This can be achieved by placing the consumer code inside a while loop. When new data arrives, the consumer will use the "poll" method to retrieve it, and then save the image in a file where consumer jar file is located. The consumer jar files takes two parameters: **server address** and **topic**. For example,
+```
+java ConsumerJavaFile.jar 192.168.4.4:9092 ImageTopic
+
+```
